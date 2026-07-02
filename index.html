@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مركز شفاء للتمريض المنزلي</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="manifest" href="manifest.json">
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <!-- Facebook Pixel Code -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', 'استبدل_بمعرف_البيكسل_الخاص_بك');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=استبدل_بمعرف_البيكسل_الخاص_بك&ev=PageView&noscript=1"/></noscript>
+  <!-- End Facebook Pixel Code -->
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: #f0f4ff;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      direction: rtl;
+    }
+    .container {
+      max-width: 480px;
+      width: 100%;
+      background: #ffffff;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* ===== الهيدر ===== */
+    .header {
+      background: linear-gradient(90deg, rgba(30,58,138,0) 0%, rgba(30,58,138,0.92) 60%, rgba(37,99,235,0.88) 100%), url('https://images.unsplash.com/photo-1584515933487-779824d29309?w=960&q=75');
+      background-size: cover;
+      background-position: center 30%;
+      padding: 28px 20px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -60%;
+      left: -30%;
+      width: 300px;
+      height: 300px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 50%;
+    }
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 0;
+      width: 100%;
+      height: 40px;
+      background: #ffffff;
+      border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+    }
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-size: 14px;
+      color: #fff;
+      margin-bottom: 16px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .logo-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      position: relative;
+      z-index: 1;
+    }
+    .logo-icon-wrap {
+      width: 56px;
+      height: 56px;
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(8px);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      flex-shrink: 0;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .logo-text {
+      font-size: 28px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.2;
+    }
+    .logo-text span {
+      font-weight: 500;
+      font-size: 15px;
+      color: rgba(255,255,255,0.75);
+      display: block;
+    }
+    .header-stats {
+      display: flex;
+      gap: 20px;
+      margin-top: 18px;
+      position: relative;
+      z-index: 1;
+    }
+    .header-stat {
+      color: #fff;
+    }
+    .header-stat strong {
+      display: block;
+      font-size: 20px;
+      font-weight: 800;
+    }
+    .header-stat small {
+      font-size: 13px;
+      opacity: 0.7;
+    }
+    .header-cta {
+      position: relative;
+      z-index: 1;
+      margin-top: 18px;
+    }
+
+    /* ===== البطاقة الترحيبية ===== */
+    .welcome-card {
+      margin: -30px 16px 0;
+      background: #fff;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 8px 30px rgba(30,58,138,0.10);
+      position: relative;
+      z-index: 2;
+      border: 1px solid #e0e7ff;
+    }
+    .welcome-card p {
+      font-size: 16px;
+      color: #475569;
+      line-height: 1.7;
+    }
+    .welcome-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .welcome-tags span {
+      background: #eff6ff;
+      color: #1E3A8A;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 20px;
+      border: 1px solid #bfdbfe;
+    }
+
+    /* ===== قسم الخدمات ===== */
+    .services-section {
+      padding: 0 16px;
+    }
+    .section-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1E3A8A;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-title small {
+      font-size: 14px;
+      font-weight: 400;
+      color: #64748b;
+    }
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 28px 0 18px;
+      padding: 0 16px;
+    }
+    .section-divider::before,
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 1.5px;
+      background: linear-gradient(90deg, transparent, #bfdbfe, transparent);
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .service-card {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 16px;
+      padding: 18px 10px 14px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      user-select: none;
+      min-height: 90px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #1E3A8A, #3B82F6);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .service-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(30,58,138,0.12);
+      border-color: #93c5fd;
+    }
+    .service-card:hover::before { opacity: 1; }
+    .service-card:active { transform: scale(0.96); }
+    .service-card .service-tap {
+      font-size: 12px;
+      color: #3B82F6;
+      opacity: 0;
+      transition: opacity 0.3s;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+    .service-card:hover .service-tap { opacity: 0.6; }
+    .service-icon {
+      font-size: 32px;
+      display: block;
+      margin-bottom: 6px;
+    }
+    .service-label {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1E3A8A;
+      line-height: 1.4;
+    }
+
+    /* ===== النموذج الرئيسي ===== */
+    .form-section {
+      padding: 0 16px;
+      margin-top: 8px;
+    }
+    .form-card {
+      background: linear-gradient(135deg, #eff6ff 0%, #f8faff 100%);
+      border: 1.5px solid #bfdbfe;
+      border-radius: 20px;
+      padding: 24px 20px;
+      box-shadow: 0 4px 20px rgba(30,58,138,0.06);
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 15px;
+      font-weight: 600;
+      color: #1E3A8A;
+      margin-bottom: 6px;
+    }
+    .input-wrap {
+      position: relative;
+    }
+    .input-wrap .input-icon {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+      pointer-events: none;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 16px 48px 16px 16px;
+      border: 1.5px solid #bfdbfe;
+      border-radius: 14px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 17px;
+      background: #fff;
+      color: #1e293b;
+      outline: none;
+      transition: all 0.25s;
+    }
+    .form-group input:focus {
+      border-color: #3B82F6;
+      box-shadow: 0 0 0 4px rgba(59,130,246,0.12);
+    }
+    .form-group input::placeholder {
+      color: #94a3b8;
+      font-size: 14px;
+    }
+
+    /* ===== الأزرار ===== */
+    .btn {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 14px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #1E3A8A, #3B82F6);
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(30,58,138,0.25);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(30,58,138,0.30);
+    }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-secondary {
+      background: #1E3A8A;
+      color: #fff;
+      margin-top: 14px;
+    }
+    .btn-secondary:hover { background: #1e40af; }
+    .btn-cta {
+      background: #ffffff;
+      color: #1E3A8A;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+    .btn-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.2);
+      background: #f8faff;
+    }
+    .btn-cta:active { transform: translateY(0); }
+
+    /* ===== زر واتساب عائم ===== */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      background: #25D366;
+      color: #fff;
+      padding: 16px 28px;
+      border-radius: 60px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      box-shadow: 0 6px 24px rgba(37,211,102,0.35);
+      transition: all 0.3s;
+      white-space: nowrap;
+      border: 2px solid rgba(255,255,255,0.2);
+    }
+    .whatsapp-float:hover {
+      transform: translateX(-50%) translateY(-3px);
+      box-shadow: 0 12px 36px rgba(37,211,102,0.45);
+    }
+    .whatsapp-float:active {
+      transform: translateX(-50%) scale(0.96);
+    }
+    .whatsapp-float .wa-icon {
+      font-size: 26px;
+    }
+
+    /* ===== نجاح النموذج ===== */
+    .success-msg {
+      display: none;
+      text-align: center;
+      padding: 40px 16px;
+      animation: fadeUp 0.5s ease;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .success-msg .big-icon {
+      font-size: 68px;
+      display: block;
+      margin-bottom: 16px;
+      animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    }
+    @keyframes popIn {
+      0% { transform: scale(0); }
+      70% { transform: scale(1.15); }
+      100% { transform: scale(1); }
+    }
+    .success-msg p {
+      font-size: 19px;
+      font-weight: 600;
+      color: #1E3A8A;
+      line-height: 1.7;
+    }
+
+    /* ===== الفوتر ===== */
+    .footer {
+      padding: 20px 16px 90px;
+      text-align: center;
+      border-top: 1px solid #e2e8f0;
+      margin-top: 32px;
+    }
+    .footer-icons {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      margin-bottom: 10px;
+    }
+    .footer-icons span {
+      font-size: 22px;
+      opacity: 0.6;
+    }
+    .footer-text {
+      font-size: 14px;
+      color: #94a3b8;
+    }
+
+    /* ===== المودال ===== */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.45);
+      z-index: 999;
+      justify-content: center;
+      align-items: flex-end;
+      animation: fadeIn 0.25s ease;
+    }
+    .modal-overlay.active { display: flex; }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .modal-sheet {
+      background: #fff;
+      width: 100%;
+      max-width: 480px;
+      border-radius: 24px 24px 0 0;
+      padding: 8px 20px 28px;
+      animation: slideUp 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+    .modal-handle {
+      width: 40px;
+      height: 4px;
+      background: #cbd5e1;
+      border-radius: 4px;
+      margin: 0 auto 16px;
+    }
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .modal-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 21px;
+      font-weight: 700;
+      color: #1E3A8A;
+    }
+    .modal-close {
+      width: 38px;
+      height: 38px;
+      border: none;
+      background: #f1f5f9;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #64748b;
+      transition: background 0.2s;
+    }
+    .modal-close:hover { background: #e2e8f0; }
+    .modal-form-group {
+      margin-bottom: 14px;
+    }
+    .modal-form-group label {
+      display: block;
+      font-size: 15px;
+      font-weight: 600;
+      color: #1E3A8A;
+      margin-bottom: 4px;
+    }
+    .modal-form-group input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1.5px solid #bfdbfe;
+      border-radius: 12px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 16px;
+      background: #f8faff;
+      color: #1e293b;
+      outline: none;
+      transition: all 0.25s;
+    }
+    .modal-form-group input:focus {
+      border-color: #3B82F6;
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+      background: #fff;
+    }
+    .modal-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 18px;
+    }
+    .modal-btns .btn {
+      padding: 16px;
+      font-size: 18px;
+      border-radius: 14px;
+    }
+    .modal-success {
+      display: none;
+      text-align: center;
+      padding: 20px 0;
+    }
+    .modal-success .ms-icon {
+      font-size: 52px;
+      display: block;
+      margin-bottom: 10px;
+    }
+    .modal-success p {
+      font-size: 17px;
+      font-weight: 600;
+      color: #1E3A8A;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 380px) {
+      .service-card { padding: 14px 6px 10px; min-height: 80px; }
+      .service-label { font-size: 13px; }
+      .service-icon { font-size: 28px; }
+      .logo-text { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- ===== الهيدر ===== -->
+    <div class="header">
+      <div class="header-badge">⭐ رعاية صحية منزلية باحتراف</div>
+      <div class="logo-row">
+        <div class="logo-icon-wrap">🏥</div>
+        <div class="logo-text">
+          مركز شفاء
+          <span>للتمريض المنزلي</span>
+        </div>
+      </div>
+      <div class="header-stats">
+        <div class="header-stat">
+          <strong>+500</strong>
+          <small>مريض</small>
+        </div>
+        <div class="header-stat">
+          <strong>★ 4.9</strong>
+          <small>تقييم</small>
+        </div>
+        <div class="header-stat">
+          <strong>24/7</strong>
+          <small>خدمة</small>
+        </div>
+      </div>
+      <div class="header-cta">
+        <a class="btn btn-cta" href="#bookingSection" onclick="scrollToForm()">📞 احجز موعدك الآن</a>
+      </div>
+    </div>
+
+    <!-- ===== البطاقة الترحيبية ===== -->
+    <div class="welcome-card">
+      <p>🏡 نقدم لكم رعاية تمريضية متكاملة في منزلكم بأيدي كوادر مؤهلة ومدربة. راحتكم أولويتنا.</p>
+      <div class="welcome-tags">
+        <span>🩺 تمريض عام</span>
+        <span>👴 رعاية مسنين</span>
+        <span>💉 عناية منزلية</span>
+      </div>
+    </div>
+
+    <!-- ===== الخدمات ===== -->
+    <div class="services-section">
+      <div class="section-divider"><!-- --></div>
+      <h2 class="section-title">🩺 خدماتنا <small>اضغط على الخدمة للحجز</small></h2>
+      <div class="services-grid">
+        <div class="service-card" onclick="openBooking('🩺','تمريض عام')">
+          <span class="service-icon">🩺</span>
+          <span class="service-label">تمريض عام</span>
+          <span class="service-tap">👆 للحجز</span>
+        </div>
+        <div class="service-card" onclick="openBooking('🏥','تمريض متخصص')">
+          <span class="service-icon">🏥</span>
+          <span class="service-label">تمريض متخصص</span>
+          <span class="service-tap">👆 للحجز</span>
+        </div>
+        <div class="service-card" onclick="openBooking('👴','رعاية مسنين')">
+          <span class="service-icon">👴</span>
+          <span class="service-label">رعاية مسنين</span>
+          <span class="service-tap">👆 للحجز</span>
+        </div>
+        <div class="service-card" onclick="openBooking('👶','رعاية أطفال')">
+          <span class="service-icon">👶</span>
+          <span class="service-label">رعاية أطفال</span>
+          <span class="service-tap">👆 للحجز</span>
+        </div>
+        <div class="service-card" onclick="openBooking('🩹','متابعة ما بعد العمليات')">
+          <span class="service-icon">🩹</span>
+          <span class="service-label">متابعة ما بعد العمليات</span>
+          <span class="service-tap">👆 للحجز</span>
+        </div>
+        <div class="service-card" onclick="openBooking('💓','قياس الضغط والسكر')">
+          <span class="service-icon">💓</span>
+          <span class="service-label">قياس الضغط والسكر</span>
+          <span class="service-tap">👆 للحجز</span>
+        </div>
+        <div class="service-card" onclick="openBooking('💉','تركيب كانيولا')">
+          <span class="service-icon">💉</span>
+          <span class="service-label">تركيب كانيولا</span>
+          <span class="service-tap">👆 للحجز</span>
+        </div>
+        <div class="service-card" onclick="openBooking('🩸','سحب تحاليل')">
+          <span class="service-icon">🩸</span>
+          <span class="service-label">سحب تحاليل</span>
+          <span class="service-tap">👆 للحجز</span>
+        </div>
+        <div class="service-card" onclick="openBooking('💊','حقن عضل ووريد وتحت الجلد')">
+          <span class="service-icon">💊</span>
+          <span class="service-label">حقن عضل ووريد وتحت الجلد</span>
+          <span class="service-tap">👆 للحجز</span>
+        </div>
+        <div class="service-card" onclick="openBooking('🧪','اختبارات حساسية')">
+          <span class="service-icon">🧪</span>
+          <span class="service-label">اختبارات حساسية</span>
+          <span class="service-tap">👆 للحجز</span>
+        </div>
+        <div class="service-card" onclick="openBooking('🩹','غيار على الجروح')">
+          <span class="service-icon">🩹</span>
+          <span class="service-label">غيار على الجروح</span>
+          <span class="service-tap">👆 للحجز</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== النموذج الرئيسي ===== -->
+    <div class="form-section" id="bookingSection">
+      <div class="section-divider"><!-- --></div>
+      <h2 class="section-title" style="margin-bottom:14px">📞 اطلب الخدمة</h2>
+      <div class="form-card" id="formSection">
+        <form id="bookingForm">
+          <div class="form-group">
+            <label for="patientName">الاسم كامل</label>
+            <div class="input-wrap">
+              <span class="input-icon">👤</span>
+              <input type="text" id="patientName" placeholder="أدخل اسمك الثلاثي" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="patientPhone">رقم الهاتف</label>
+            <div class="input-wrap">
+              <span class="input-icon">📱</span>
+              <input type="tel" id="patientPhone" placeholder="05xxxxxxxx" required>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">📞 اطلب الخدمة الآن</button>
+        </form>
+      </div>
+      <div class="form-card" id="successSection" style="display:none; padding:32px 20px;">
+        <div class="success-msg" style="display:block;">
+          <span class="big-icon">✅</span>
+          <p>تم استلام طلبك بنجاح.<br>سيتواصل معك المنسق قريباً.</p>
+          <button class="btn btn-secondary" onclick="resetForm()">🔄 إرسال طلب آخر</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== واتساب عائم ===== -->
+    <a class="whatsapp-float" href="https://wa.me/201234567890" target="_blank" rel="noopener" onclick="if(typeof fbq==='function')fbq('trackCustom','WhatsAppClick')">
+      <span class="wa-icon">💬</span> تواصل عبر واتساب
+    </a>
+
+    <!-- ===== الفوتر ===== -->
+    <div class="footer">
+      <div class="footer-icons">
+        <span>🏥</span>
+        <span>🩺</span>
+        <span>💙</span>
+      </div>
+      <div class="footer-text">مركز شفاء للتمريض المنزلي © 2026</div>
+    </div>
+  </div>
+
+  <!-- ===== المودال ===== -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-sheet" onclick="event.stopPropagation()">
+      <div class="modal-handle"></div>
+      <div class="modal-header">
+        <div class="modal-title">
+          <span class="modal-service-icon" id="modalServiceIcon">🩺</span>
+          <span id="modalServiceName">تمريض عام</span>
+        </div>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div id="modalFormContent">
+        <p style="font-size:16px;color:#64748b;margin-bottom:16px;line-height:1.5;">أدخل بياناتك وسيتم التواصل معك فوراً</p>
+        <div class="modal-form-group">
+          <label for="modalName">الاسم كامل</label>
+          <input type="text" id="modalName" placeholder="أدخل اسمك">
+        </div>
+        <div class="modal-form-group">
+          <label for="modalPhone">رقم الهاتف</label>
+          <input type="tel" id="modalPhone" placeholder="05xxxxxxxx">
+        </div>
+        <div class="modal-btns">
+          <button class="btn btn-primary" onclick="submitModalBooking()">📞 تأكيد الحجز</button>
+          <a class="btn" id="modalWhatsappLink" href="#" target="_blank" rel="noopener" onclick="if(typeof fbq==='function')fbq('trackCustom','WhatsAppClick')" style="background:#25D366;color:#fff;box-shadow:0 4px 16px rgba(37,211,102,0.25);">
+            💬 تواصل عبر واتساب
+          </a>
+        </div>
+      </div>
+      <div class="modal-success" id="modalSuccess">
+        <span class="ms-icon">✅</span>
+        <p>تم استلام طلبك لخدمة<br><strong id="modalSuccessService">تمريض عام</strong><br>سيتواصل معك المنسق قريباً.</p>
+        <button class="btn btn-secondary" onclick="closeModal()" style="margin-top:18px;">حسناً</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://zvxzdihonmlglrufrjjl.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp2eHpkaWhvbm1sZ2xydWZyampsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwMjA3MjEsImV4cCI6MjA5ODU5NjcyMX0.cZi4F0K28AiT2aXdr4MUCLbub-zUPUXP1IlPntcxEv8';
+
+    let supabaseClient = null;
+    if (SUPABASE_URL && SUPABASE_ANON_KEY) {
+      supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    }
+
+    let currentService = '';
+
+    /* ===== المودال ===== */
+    function openBooking(icon, name) {
+      currentService = name;
+      document.getElementById('modalServiceIcon').textContent = icon;
+      document.getElementById('modalServiceName').textContent = name;
+      document.getElementById('modalSuccessService').textContent = name;
+
+      const savedPhone = localStorage.getItem('shifa_phone');
+      document.getElementById('modalPhone').value = savedPhone || '';
+      document.getElementById('modalName').value = '';
+      document.getElementById('modalName').focus();
+
+      document.getElementById('modalFormContent').style.display = 'block';
+      document.getElementById('modalSuccess').style.display = 'none';
+      document.getElementById('modalOverlay').classList.add('active');
+
+      const waMsg = encodeURIComponent(`مرحباً، أريد حجز خدمة: ${name} - مركز شفاء للتمريض المنزلي`);
+      document.getElementById('modalWhatsappLink').href = `https://wa.me/201234567890?text=${waMsg}`;
+
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('modalOverlay').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+
+    async function submitModalBooking() {
+      const name = document.getElementById('modalName').value.trim();
+      const phone = document.getElementById('modalPhone').value.trim();
+      if (!name || !phone) {
+        alert('يرجى تعبئة جميع الحقول');
+        return;
+      }
+      localStorage.setItem('shifa_phone', phone);
+
+      if (supabaseClient) {
+        try {
+          const { error } = await supabaseClient
+            .from('bookings')
+            .insert({ patient_name: name, patient_phone: phone, status: 'pending', service: currentService });
+          if (error) { alert('حدث خطأ. حاول مرة أخرى.'); return; }
+        } catch { alert('تعذر الاتصال بالخادم.'); return; }
+      }
+      if (typeof fbq === 'function') {
+        fbq('trackCustom', 'Booking', { service: currentService });
+        fbq('track', 'Lead');
+      }
+      document.getElementById('modalFormContent').style.display = 'none';
+      document.getElementById('modalSuccess').style.display = 'block';
+    }
+
+    /* ===== النموذج الرئيسي ===== */
+    const bookingForm = document.getElementById('bookingForm');
+    const formSection = document.getElementById('formSection');
+    const successSection = document.getElementById('successSection');
+
+    const savedPhone = localStorage.getItem('shifa_phone');
+    if (savedPhone) document.getElementById('patientPhone').value = savedPhone;
+
+    bookingForm.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const name = document.getElementById('patientName').value.trim();
+      const phone = document.getElementById('patientPhone').value.trim();
+      if (!name || !phone) return;
+      localStorage.setItem('shifa_phone', phone);
+
+      if (supabaseClient) {
+        try {
+          const { error } = await supabaseClient
+            .from('bookings')
+            .insert({ patient_name: name, patient_phone: phone, status: 'pending' });
+          if (error) { alert('حدث خطأ. حاول مرة أخرى.'); return; }
+        } catch { alert('تعذر الاتصال بالخادم.'); return; }
+      }
+      if (typeof fbq === 'function') {
+        fbq('trackCustom', 'Booking');
+        fbq('track', 'Lead');
+      }
+      formSection.style.display = 'none';
+      successSection.style.display = 'block';
+      bookingForm.reset();
+    });
+
+    function resetForm() {
+      successSection.style.display = 'none';
+      formSection.style.display = 'block';
+    }
+
+    function scrollToForm() {
+      document.getElementById('bookingSection').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js');
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeModal();
+    });
+  </script>
+</body>
+</html>

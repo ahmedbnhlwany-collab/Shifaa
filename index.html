@@ -828,7 +828,7 @@
         try {
           const { error } = await supabaseClient
             .from('bookings')
-            .insert({ patient_name: name, patient_phone: phone, status: 'pending', service: currentService });
+            .insert({ patient_name: name, patient_phone: phone, status: 'pending', service: currentService, booking_source: 'landing_page' });
           if (error) { alert('حدث خطأ. حاول مرة أخرى.'); return; }
         } catch { alert('تعذر الاتصال بالخادم.'); return; }
       }
@@ -859,7 +859,7 @@
         try {
           const { error } = await supabaseClient
             .from('bookings')
-            .insert({ patient_name: name, patient_phone: phone, status: 'pending' });
+            .insert({ patient_name: name, patient_phone: phone, status: 'pending', booking_source: 'landing_page' });
           if (error) { alert('حدث خطأ. حاول مرة أخرى.'); return; }
         } catch { alert('تعذر الاتصال بالخادم.'); return; }
       }

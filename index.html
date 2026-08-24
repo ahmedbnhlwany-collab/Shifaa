@@ -828,8 +828,14 @@
         try {
           const { error } = await supabaseClient
             .from('bookings')
-            .insert({ patient_name: name, patient_phone: phone, status: 'pending', service: currentService, booking_source: 'landing_page' });
-          if (error) {    alert('الخطأ هو: ' + error.message);    console.error("تفاصيل Supabase:", error);   return;  }
+const { error } = await supabaseClient
+  .from('bookings')
+  .insert({ 
+    patient_name: name, 
+    patient_phone: phone, 
+    status: 'pending', 
+    booking_source: 'landing_page' 
+  });          if (error) {    alert('الخطأ هو: ' + error.message);    console.error("تفاصيل Supabase:", error);   return;  }
         } catch { alert('تعذر الاتصال بالخادم.'); return; }
       }
       if (typeof fbq === 'function') {

@@ -815,9 +815,11 @@
       if (e.target === this) closeModal();
     });
 
+    /* --- الدالة التي تم إصلاحها --- */
     async function submitModalBooking() {
       const name = document.getElementById('modalName').value.trim();
       const phone = document.getElementById('modalPhone').value.trim();
+      
       if (!name || !phone) {
         alert('يرجى تعبئة جميع الحقول');
         return;
@@ -828,20 +830,30 @@
         try {
           const { error } = await supabaseClient
             .from('bookings')
-const { error } = await supabaseClient
-  .from('bookings')
-  .insert({ 
-    patient_name: name, 
-    patient_phone: phone, 
-    status: 'pending', 
-    booking_source: 'landing_page' 
-  });          if (error) {    alert('الخطأ هو: ' + error.message);    console.error("تفاصيل Supabase:", error);   return;  }
-        } catch { alert('تعذر الاتصال بالخادم.'); return; }
+            .insert({ 
+              patient_name: name, 
+              patient_phone: phone, 
+              status: 'pending', 
+              booking_source: 'landing_page' 
+            });
+            
+          if (error) {    
+            alert('الخطأ هو: ' + error.message);    
+            console.error("تفاصيل Supabase:", error);   
+            return;  
+          }
+        } catch (err) { 
+          alert('تعذر الاتصال بالخادم.'); 
+          console.error(err);
+          return; 
+        }
       }
+      
       if (typeof fbq === 'function') {
         fbq('trackCustom', 'Booking', { service: currentService });
         fbq('track', 'Lead');
       }
+      
       document.getElementById('modalFormContent').style.display = 'none';
       document.getElementById('modalSuccess').style.display = 'block';
     }
@@ -866,13 +878,24 @@ const { error } = await supabaseClient
           const { error } = await supabaseClient
             .from('bookings')
             .insert({ patient_name: name, patient_phone: phone, status: 'pending', booking_source: 'landing_page' });
-          if (error) {    alert('الخطأ هو: ' + error.message);    console.error("تفاصيل Supabase:", error);   return;  }
-        } catch { alert('تعذر الاتصال بالخادم.'); return; }
+            
+          if (error) {    
+            alert('الخطأ هو: ' + error.message);    
+            console.error("تفاصيل Supabase:", error);   
+            return;  
+          }
+        } catch (err) { 
+          alert('تعذر الاتصال بالخادم.'); 
+          console.error(err);
+          return; 
+        }
       }
+      
       if (typeof fbq === 'function') {
         fbq('trackCustom', 'Booking');
         fbq('track', 'Lead');
       }
+      
       formSection.style.display = 'none';
       successSection.style.display = 'block';
       bookingForm.reset();
